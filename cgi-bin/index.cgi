@@ -10,8 +10,8 @@
         --title "Stats For MySQL"
         --width=800 --height=200
         DEF:alive=<RRD::CV::PATH RRD_NAME>.rrd:alive:MIN
-        CDEF:a0red=alive,1,LT,1,alive,IF
-        CDEF:a1green=alive,1,GE
+        CDEF:a0red=alive,1,LT,alive,UNKN,IF
+        CDEF:a1green=alive,1,GE,alive,UNKN,IF
         LINE1:a0red#FF0000:"MySQL Unavailabile"
         LINE1:a1green#00FF00:"MySQL Availabile"
       >

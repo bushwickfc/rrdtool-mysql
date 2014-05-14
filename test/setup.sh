@@ -91,12 +91,12 @@ if [ ! -f $rrd ]; then
   done
 fi
 
-rrdtool graph mysqldTEST.png -u 1.1 --width=800 --height=200 \
+rrdtool graph mysqldTEST.png -u 1.1 -l -0.1 --width=800 --height=200 \
 DEF:ds1=mysqld.rrd:alive:MIN  \
-CDEF:ds1red=ds1,1,LT \
-CDEF:ds1green=ds1,1,GE \
-LINE1:ds1green#00CC00:"MySQL Available" \
-LINE1:ds1red#CC0000:"MySQL Unavailable"
+CDEF:ds1red=ds1,1,LT,ds1,UNKN,IF \
+CDEF:ds1green=ds1,1,GE,ds1,UNKN,IF \
+LINE1:ds1red#CC0000:"MySQL Unavailable" \
+LINE1:ds1green#00CC00:"MySQL Available" 
 
 rrdtool graph mysqldAVG.png --width=800 --height=200 DEF:cel=mysqld.rrd:alive:AVERAGE \
   LINE1:cel#00a000:"MySQL Availability, 1=yes 0=no"
